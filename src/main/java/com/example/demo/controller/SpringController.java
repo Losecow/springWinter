@@ -77,4 +77,16 @@ public class SpringController {
 
     // assignment1 이라는 메서드를 만들고, url 은 /assignment 로 지정
     // 구구단을 1단부터 9단까지 출력하고, 리턴값은 '완료' 라는 한글 담기
+
+    @ResponseBody
+    @RequestMapping("/Dan")
+    public static void printAll() {
+        for (int dan = 2; dan <= 9; dan++) {
+            for (int i = 1; i <= 9; i++) {
+                System.out.println(dan + " x " + i + " = " + (dan * i));
+            }
+            System.out.println(); // 단 구분
+        }
+    }
+
 }
