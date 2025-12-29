@@ -67,10 +67,14 @@ public class SpringController {
         aaaList.add("122333");
         aaaList.add("122333");
         for(int i = 0; i < aaaList.size(); i++) {
-            String each = aaaList[i];
+//            String each = aaaList[i];
         }
 
 
         return "Hello World";
     }
+
+
+    // assignment1 이라는 메서드를 만들고, url 은 /assignment 로 지정
+    // 구구단을 1단부터 9단까지 출력하고, 리턴값은 '완료' 라는 한글 담기
 }
