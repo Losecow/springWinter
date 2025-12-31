@@ -9,10 +9,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DefaultController {
 
-    @RequestMapping("/index")
-    public String index() {
+    @RequestMapping({"", "/"})
+    public String empty() {
         return "index";
     }
+
+    @RequestMapping("/index")
+    public String empty2() {
+        return "redirect:/add?a=1&b=2";
+    }
+
+//    @RequestMapping("/index")
+//    public String index() {
+//        return "index";
+//    }
 
     @RequestMapping("/multiple")
     public String muitiple(int a, int b, Model model) {
@@ -31,6 +41,16 @@ public class DefaultController {
 
         model.addAttribute("result", 112233);
         return "board";
+    }
+
+    @RequestMapping("/add")
+    public String add(int a, int b, Model model) {
+        System.out.println("a : "+ a);
+        System.out.println("a : "+ b);
+
+        int sum = a + b;
+        model.addAttribute("sum", sum);
+        return "add";
     }
 
 }
