@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.page;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,14 +34,14 @@ public class DefaultController {
         return "multiple";
     }
 
-    @RequestMapping("/board")
-    public String board(@RequestParam String a, String b, Model model) {
-
-        // 꼭 받아야 하는 파라미터 @RequestParam
-
-        model.addAttribute("result", 112233);
-        return "board";
-    }
+//    @RequestMapping("/board")
+//    public String board(@RequestParam String a, String b, Model model) {
+//
+//        // 꼭 받아야 하는 파라미터 @RequestParam
+//
+//        model.addAttribute("result", 112233);
+//        return "board";
+//    }
 
     @RequestMapping("/add")
     public String add(int a, int b, Model model) {
