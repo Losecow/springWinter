@@ -1,12 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.PostingDto;
 import com.example.demo.service.PostingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -20,24 +17,33 @@ public class PostingRestController {
 //    private PostingService postingService;
     final PostingService postingService; // @RequiredARgsConstructor
 
-    @GetMapping("/create")
-    public Map<String, Object> create(@RequestParam Map<String, Object> map) {
-        return postingService.create(map);
+//    @GetMapping("/create")
+//    @PostMapping("")
+//    public Map<String, Object> create(@RequestParam Map<String, Object> map) {
+//        return postingService.create(map);
+//    }
+
+    @PostMapping("")
+    public PostingDto.CreateResDto create(PostingDto.CreateReqDto param) {
+        return postingService.create(param);
     }
 
-    @GetMapping("/detail")
-    public Map<String, Object> detail(@RequestParam Long id) {
-        return postingService.detail(id);
+//    @GetMapping("/update")
+    @PutMapping("")
+    public void update(@RequestParam PostingDto.UpdateReqDto param) {
+
+        return postingService.update(param);
     }
 
-    @GetMapping("/update")
-    public Map<String, Object> update(@RequestParam Map<String, Object> map) {
-        return postingService.update(map);
+//    @GetMapping("/delete")
+    @DeleteMapping("")
+    public void delete(@RequestParam PostingDto.UpdateReqDto param) {
+        return postingService.delete(param);
     }
+    @GetMapping("")
+    public Map<String, Object> detail(@RequestParam PostingDto.DetailReqDto param) {
 
-    @GetMapping("/delete")
-    public Map<String, Object> delete(@RequestParam Integer id) {
-        return postingService.delete(id);
+        return postingService.detail(param);
     }
 
     @GetMapping("/list")

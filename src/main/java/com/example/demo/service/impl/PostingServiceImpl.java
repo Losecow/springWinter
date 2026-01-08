@@ -1,82 +1,80 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.domain.Posting;
+import com.example.demo.dto.PostingDto;
 import com.example.demo.repository.PostingRepository;
 import com.example.demo.service.PostingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
-// 서비스와 서비스는 이동 가능 (단방향)
 @Service
-public class PostingServiceImpl implements PostingService { // 구체화 필수
+public class PostingServiceImpl implements PostingService {
 
     final PostingRepository postingRepository;
 
-//    Map<Integer, Map<String, Object>> postings = new HashMap<>();
-    int sequence = 1;
-
     @Override
-    public Map<String, Object> create(Map<String, Object> map) {
+    public PostingDto.CreateResDto create(PostingDto.CreateReqDto param) {
 
         Posting posting = new Posting();
-//        Long id = Long.parseLong(map.get("id").toString());
+        //Long id = Long.parseLong(map.get("id").toString());
+        String title = param.getTitle();
+        String content = param.getContent();
+        String author =param.getAuthor();
+        //posting.setId(id);
+        posting.setTitle(title);
+        posting.setContent(content);
+        posting.setAuthor(author);
+        posting = postingRepository.save(posting); // 저장한 결과 리턴을 엔티티로 돌려줌!
+//
+//        Map<String, Object> result = new HashMap<>();
+//        result.put("resultCode", 200);
+//        result.put("id", posting.getId());
 
+        PostingDto.CreateResDto res = new PostingDto.CreateResDto();
+        res.setId(posting.getId());
 
-        String title = map.get("title") + "";
-        String content = map.get("content") + "";
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("resultCode", 200);
-//        result.put("id", id);
-        result.put("id", posting.getId());
-
-        return result;
+        return res;
     }
-
     @Override
-    public Map<String, Object> detail(Long id) {
+    public void update(Map<String, Object> map) {
+        Long id = Long.parseLong(map.get("id") + "");
+        Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("no data"));
 
-    }
-
-    @Override
-    public Map<String, Object> update(Map<String, Object> params) {
-        Integer id = Integer.parseInt(params.get("id") + "");
-        Map<String, Object> posting = postings.get(id);
-        if(posting != null) {
-            if(params.get("title") != null) {
-                posting.put("title", params.get("title"));
-            }
-            if(params.get("content") != null) {
-                posting.put("content", params.get("content"));
-            }
-        }
-
-        Map<String, Object> map_result = new HashMap<>();
-        map_result.put("status", 200);
-        return map_result;
+        if(map.get("title") != null) { posting.setTitle(map.get("title") + ""); }
+        if(map.get("content") != null) { posting.setContent(map.get("content") + ""); }
+        postingRepository.save(posting);
     }
 
     @Override
     public Map<String, Object> delete(Integer id) {
-        postings.remove(id);
-
-        Map<String, Object> map_result = new HashMap<>();
-        map_result.put("status", 200);
-        return map_result;
+        return Map.of();
     }
 
     @Override
+    public void delete(Long id) {
+        Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("no data"));
+        postingRepository.delete(posting);
+    }
+    @Override
+    public Map<String, Object> detail(Long id) {
+        //Optional<Posting> posting = postingRepository.findById(id); // 0 , 1
+        Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("no data"));
+        Map<String, Object> result = new HashMap<>();
+        result.put("resultCode", 200);
+        result.put("data", posting);
+        return result;
+    }
+    @Override
     public Map<String, Object> list() {
-
-
-        List<Posting> list = new postingRepository.findAll();
-
-
-
-        return map_result;
+        List<Posting> list = postingRepository.findAll();
+        Map<String, Object> result = new HashMap<>();
+        result.put("resultCode", 200);
+        result.put("data", list);
+        return result;
     }
 }
-

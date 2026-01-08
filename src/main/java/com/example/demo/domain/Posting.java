@@ -20,5 +20,6 @@ public class Posting {
     String title;
     String content;
     Date createdAt;
+    String author;
 }
 

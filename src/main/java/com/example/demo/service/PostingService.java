@@ -1,16 +1,19 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.Posting;
+import com.example.demo.dto.PostingDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
 public interface PostingService {
 
-    public Map<String, Object> create(Map<String, Object> params);
-    public Map<String, Object> detail(Long id);
-    public Map<String, Object> update(Map<String, Object> params);
-    public Map<String, Object> delete(Integer id);
-    public Map<String, Object> list();
+    public PostingDto.CreateResDto create(PostingDto.CreateReqDto param);
+    public void update(PostingDto.UpdateReqDto param);
+    public void delete(PostingDto.CreateReqDto param);
+    public PostingDto.DetailResDto detail(PostingDto.DetailReqDto param);
+    public List<PostingDto.DetailReqDto> list();
 }
 
